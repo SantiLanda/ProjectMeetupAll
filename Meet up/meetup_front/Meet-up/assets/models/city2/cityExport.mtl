@@ -1,0 +1,82 @@
+# Blender 4.4.0 MTL File: 'None'
+# www.blender.org
+
+newmtl Material_#4214
+Ns 20.000006
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd C:/SANTIAGO/PROYECTO UP/unity/CIUDAD MEET-UP4/CIUDAD MEET-UP4/Assets/Package/project_drift_horizon/New Track Model/Material Correction/city_bannar.tif
+
+newmtl Material_#4216
+Ns 20.000006
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd C:/SANTIAGO/PROYECTO UP/unity/CIUDAD MEET-UP4/CIUDAD MEET-UP4/Assets/Package/project_drift_horizon/New Track Model/Material Correction/city_classical Day.tif
+
+newmtl Material_#4217
+Ns 20.000006
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd C:/SANTIAGO/PROYECTO UP/unity/CIUDAD MEET-UP4/CIUDAD MEET-UP4/Assets/Package/project_drift_horizon/New Track Model/Material Correction/city_industrial Day.tif
+
+newmtl Material_#4218
+Ns 20.000006
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd C:/SANTIAGO/PROYECTO UP/unity/CIUDAD MEET-UP4/CIUDAD MEET-UP4/Assets/Package/project_drift_horizon/New Track Model/Material Correction/city_modern Day.tif
+
+newmtl Material_#4219
+Ns 20.000006
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd C:/SANTIAGO/PROYECTO UP/unity/CIUDAD MEET-UP4/CIUDAD MEET-UP4/Assets/Package/project_drift_horizon/New Track Model/Material Correction/city_props Day.tif
+
+newmtl Material_#4220
+Ns 20.000006
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd C:/SANTIAGO/PROYECTO UP/unity/CIUDAD MEET-UP4/CIUDAD MEET-UP4/Assets/Package/project_drift_horizon/New Track Model/Material Correction/city_props_b Day.tif
+
+newmtl Material_#4221
+Ns 20.000006
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd C:/SANTIAGO/PROYECTO UP/unity/CIUDAD MEET-UP4/CIUDAD MEET-UP4/Assets/Package/project_drift_horizon/New Track Model/Material Correction/city_road Day.tif
+
+newmtl Material_#4222
+Ns 319.999939
+Ka 1.000000 1.000000 1.000000
+Ks 0.100000 0.100000 0.100000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+map_Kd C:/SANTIAGO/PROYECTO UP/unity/CIUDAD MEET-UP4/CIUDAD MEET-UP4/Assets/Package/project_drift_horizon/New Track Model/Material Correction/city_veg Day.tif
