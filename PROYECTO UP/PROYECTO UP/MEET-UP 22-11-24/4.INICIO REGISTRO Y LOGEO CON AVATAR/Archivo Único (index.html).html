@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meet-Up Registration</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body Styling */
+    body {
+      font-family: Arial, sans-serif;
+      background: url("images/registro.webp") no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Form Styling */
+    .form-container {
+      width: 90%;
+      max-width: 400px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+    }
+    .form-container h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #fff;
+      text-shadow: 1px 1px 4px #000;
+    }
+    .form-container label {
+      font-size: 1rem;
+      display: block;
+      margin-bottom: 8px;
+      color: #fff;
+      text-shadow: 1px 1px 2px #000;
+    }
+    .form-container input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 25px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 1rem;
+      text-shadow: 1px 1px 2px #000;
+    }
+    .form-container button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(45deg, #2980b9, #e67e22);
+      color: #fff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      text-shadow: 1px 1px 4px #000;
+    }
+    .form-container button:hover {
+      transform: scale(1.1);
+    }
+
+    /* Fingerprint Button */
+    .fingerprint-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 10px auto;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #e67e22, #f39c12);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+    }
+    .fingerprint-button img {
+      width: 30px;
+      height: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Register</h2>
+    <form>
+      <label for="full-name">Full Name</label>
+      <input type="text" id="full-name" placeholder="Enter your full name" required>
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" placeholder="Enter your email" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter your password" required>
+
+      <!-- Fingerprint Scan -->
+      <div class="fingerprint-button" onclick="scanFingerprint()">
+        <img src="images/imagen avatar.webp" alt="Fingerprint Icon">
+      </div>
+
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <script>
+    function scanFingerprint() {
+      alert("Fingerprint scan successful!");
+    }
+  </script>
+</body>
+</html>

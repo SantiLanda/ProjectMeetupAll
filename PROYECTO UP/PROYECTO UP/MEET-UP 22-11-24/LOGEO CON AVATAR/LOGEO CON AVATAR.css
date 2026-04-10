@@ -1,0 +1,17 @@
+/* Gender Options */
+.gender-options {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.gender-options label {
+    margin: 0 10px;
+    font-size: 1rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+.gender-options input[type="radio"] {
+    margin-right: 5px;
+}

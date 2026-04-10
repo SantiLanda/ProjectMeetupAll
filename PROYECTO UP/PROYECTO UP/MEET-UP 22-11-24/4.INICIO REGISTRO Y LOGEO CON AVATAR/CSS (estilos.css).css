@@ -1,0 +1,240 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Body Styling */
+  body {
+    font-family: Arial, sans-serif;
+    background: #1abc9c;
+    color: #fff;
+    line-height: 1.6;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  /* Header Styling */
+  header {
+    padding: 20px;
+    background: #16a085;
+  }
+  header .logo img {
+    width: 120px;
+  }
+  header h1 {
+    font-size: 2.5rem;
+    margin: 10px 0;
+  }
+  header p {
+    margin: 10px 0 20px;
+    font-size: 1.2rem;
+  }
+  header .cta-buttons button {
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  header .cta-buttons button#join-now {
+    background: #2980b9;
+    color: #fff;
+  }
+  header .cta-buttons button#explore-events {
+    background: #e67e22;
+    color: #fff;
+  }
+  
+  /* Features Section */
+  .features {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+  }
+  .feature-card {
+    background: #2ecc71;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  .feature-card h2 {
+    margin-bottom: 10px;
+  }
+  
+  /* Popular Events Section */
+  .popular-events .event-card {
+    background: #27ae60;
+    margin: 10px auto;
+    padding: 15px;
+    border-radius: 10px;
+    width: 80%;
+  }
+  
+  /* Registration & Login Forms */
+  form {
+    width: 80%;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #2ecc71;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+  }
+  form input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+  }
+  form button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #fff;
+  }
+  form button#fingerprint-scan {
+    background: #3498db;
+  }
+  form button#submit-registration,
+  form button#login-button {
+    background: #e67e22;
+  }
+  
+  /* Gender Options */
+  .gender-options {
+    display: flex;
+    justify-content: space-around;
+    margin: 10px 0;
+  }
+  .gender-options label {
+    margin: 0 10px;
+    font-size: 1rem;
+    color: #fff;
+    cursor: pointer;
+  }
+  .gender-options input[type="radio"] {
+    margin-right: 5px;
+  }
+  
+  /* Avatar Container */
+  .image-container {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: white;
+    border: 5px solid #986844;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    margin: 20px auto;
+  }
+  .image-container .image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    bottom: -12%;
+    animation: avatar 5s ease-in-out infinite;
+    transform-origin: bottom;
+    transition: 500ms;
+  }
+  .image-container img {
+    display: inline-block;
+    position: absolute;
+    transition: 100ms;
+  }
+  .image-container img.face {
+    width: 40%;
+    left: 30%;
+    bottom: 40%;
+    opacity: 0;
+  }
+  .image-container .face-1 {
+    opacity: 1;
+    animation: eye-open 2s ease-in-out infinite;
+  }
+  .image-container .face-2 {
+    animation: blink 2s ease-in-out infinite;
+  }
+  @keyframes avatar {
+    0%, 50%, 100% {
+      transform: rotate(0deg) translateY(0px) scale(1.05);
+    }
+    25% {
+      transform: rotate(5deg) translateY(5px) scale(1);
+    }
+    75% {
+      transform: rotate(-5deg) translateY(5px) scale(1);
+    }
+  }
+  @keyframes blink {
+    0%, 89%, 100% {
+      opacity: 0;
+    }
+    90%, 99% {
+      opacity: 1;
+    }
+  }
+  @keyframes eye-open {
+    0%, 89%, 100% {
+      opacity: 1;
+    }
+    90%, 99% {
+      opacity: 0;
+    }
+  }
+  .image-container:hover img.face {
+    opacity: 0 !important;
+    animation: none;
+  }
+  .image-container:hover img.face-3 {
+    opacity: 1 !important;
+  }
+  
+  /* Footer */
+  footer {
+    margin-top: 20px;
+    padding: 10px;
+    background: #16a085;
+  }
+  footer p {
+    margin: 0;
+  }
+  footer .social-icons a {
+    margin: 0 10px;
+    color: #fff;
+    text-decoration: none;
+  }
+  footer input {
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  footer button {
+    background: #27ae60;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  

@@ -1,0 +1,87 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Body Styling */
+  body {
+    font-family: Arial, sans-serif;
+    background: #1abc9c;
+    color: #fff;
+    line-height: 1.6;
+    text-align: center;
+  }
+  
+  /* Header Styling */
+  header {
+    padding: 20px;
+    background: #16a085;
+  }
+  header .logo img {
+    width: 120px;
+  }
+  header h1 {
+    font-size: 2.5rem;
+    margin: 10px 0;
+  }
+  header p {
+    margin: 10px 0 20px;
+    font-size: 1.2rem;
+  }
+  
+  /* Registration Form */
+  .register-form {
+    background: #2ecc71;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  .register-form form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  .register-form form input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+  }
+  #fingerprint-scan {
+    background: #3498db;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+  }
+  #submit-registration {
+    background: #e67e22;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+  }
+  #biometric-status {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #16a085;
+  }
+  
+  /* Footer */
+  footer {
+    margin-top: 20px;
+    padding: 10px;
+    background: #16a085;
+  }
+  

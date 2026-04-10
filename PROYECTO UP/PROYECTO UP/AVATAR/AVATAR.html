@@ -1,0 +1,357 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <title>Babylon.js sample code</title>
+
+        <!-- Babylon.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
+        <script src="https://assets.babylonjs.com/generated/Assets.js"></script>
+        <script src="https://cdn.babylonjs.com/recast.js"></script>
+        <script src="https://cdn.babylonjs.com/ammo.js"></script>
+        <script src="https://cdn.babylonjs.com/havok/HavokPhysics_umd.js"></script>
+        <script src="https://cdn.babylonjs.com/cannon.js"></script>
+        <script src="https://cdn.babylonjs.com/Oimo.js"></script>
+        <script src="https://cdn.babylonjs.com/earcut.min.js"></script>
+        <script src="https://cdn.babylonjs.com/babylon.js"></script>
+        <script src="https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+        <script src="https://cdn.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
+        <script src="https://cdn.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
+        <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.js"></script>
+        <script src="https://cdn.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
+        <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
+        <script src="https://cdn.babylonjs.com/addons/babylonjs.addons.min.js"></script>
+        <script src="https://cdn.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
+
+        <style>
+            html,
+            body {
+                overflow: hidden;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            #renderCanvas {
+                width: 100%;
+                height: 100%;
+                touch-action: none;
+            }
+
+            #canvasZone {
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="canvasZone"><canvas id="renderCanvas"></canvas></div>
+        <script>
+                    var canvas = document.getElementById("renderCanvas");
+
+                    var startRenderLoop = function (engine, canvas) {
+                        engine.runRenderLoop(function () {
+                            if (sceneToRender && sceneToRender.activeCamera) {
+                                sceneToRender.render();
+                            }
+                        });
+                    }
+
+                    var engine = null;
+        var scene = null;
+        var sceneToRender = null;
+        var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
+        /***************************************************
+ * WebGPU Avatar Demo
+ * ************************************************
+ * 
+ * WebGPU version working (at the moment) on Chrome Canary desktop with WebGPU flag enabled - Origin trial has been paused for a couple weeks.
+ * 
+ * WebGPU Render Bundle used via snapshot Rendering mode, documentation on: https://doc.babylonjs.com/advanced_topics/webGPU/webGPUOptimization/webGPUSnapshotRendering
+ *
+ * Assets Credits:
+ * - ReadyPlayerMe Avatar - Licensed under Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0): https://creativecommons.org/licenses/by-nc-sa/4.0/
+ * - Plaster wall and wood floor textures from ambientCG.com - Licensed under CC0 1.0 Universal: https://creativecommons.org/publicdomain/zero/1.0/
+ */
+
+
+//Create a custom loading screen 
+BABYLON.DefaultLoadingScreen.prototype.displayLoadingUI = function () {
+    if (document.getElementById("customLoadingScreenDiv")) {
+        // Do not add a loading screen if there is already one
+        document.getElementById("customLoadingScreenDiv").style.display = "initial";
+        return;
+    }
+    this._loadingDiv = document.createElement("div");
+    this._loadingDiv.id = "customLoadingScreenDiv";
+    this._loadingDiv.innerHTML = "RPM Avatar Demo - Working on Chrome Canary desktop with WebGPU flag enabled.<BR><BR>The Scene is currently loading...";
+    var customLoadingScreenCss = document.createElement('style');
+    customLoadingScreenCss.innerHTML = `
+    #customLoadingScreenDiv{
+        background-color: #BB464Bcc;
+        color: white;
+        font-size:50px;
+        text-align:center;
+    }
+    `;
+    document.getElementsByTagName('head')[0].appendChild(customLoadingScreenCss);
+    this._resizeLoadingUI();
+    window.addEventListener("resize", this._resizeLoadingUI);
+    document.body.appendChild(this._loadingDiv);
+}
+
+BABYLON.DefaultLoadingScreen.prototype.hideLoadingUI = function () {
+    document.getElementById("customLoadingScreenDiv").style.display = "none";
+    console.log("scene is now loaded");
+}
+
+//Set-up WebGPU Snapshot Recording modes
+const setSnapshotMode = (mode) => {
+    switch (mode) {
+        case "disabled":
+            engine.snapshotRendering = false;
+            break;
+        case "standard":
+            engine.snapshotRenderingMode = BABYLON.Constants.SNAPSHOTRENDERING_STANDARD;
+            engine.snapshotRendering = true;
+            break;
+        case "fast":
+            engine.snapshotRenderingMode = BABYLON.Constants.SNAPSHOTRENDERING_FAST;
+            engine.snapshotRendering = true;
+            break;
+    }
+}
+
+
+var delayCreateScene = async function () {
+
+    //Display loading screen
+    engine.displayLoadingUI();
+
+    //Create a scene and check if the engine is running in WebGPU mode
+    const scene = new BABYLON.Scene(engine);
+    const IsWebGPUMode = engine.isWebGPU;
+
+    //Ensure all obejects are rendered when switching to Snaphot Fast Mode (even if not all objects are in the camera FOV when switching) 
+    scene.skipFrustumClipping = true
+
+    // Get instrumentation data from the Babylon engine
+    const sceneInstrumentation = new BABYLON.SceneInstrumentation(scene);
+    sceneInstrumentation.captureFrameTime = true;
+
+    // Create a default skybox with an environment.
+    const hdrTexture = BABYLON.CubeTexture.CreateFromPrefilteredData("textures/environment.env", scene);
+    const currentSkybox = scene.createDefaultSkybox(hdrTexture, true);
+    currentSkybox.isVisible = false;
+    // keep IBL intensity low to ensure shadows are visible
+    scene.environmentIntensity = 0.02;
+    //Add lights to have shadows
+    const spotLight1 = new BABYLON.SpotLight("spot1", new BABYLON.Vector3(-4, 6, -3), new BABYLON.Vector3(1, -1.5, 1), Math.PI / 2, 10, scene);
+    spotLight1.intensity = 200;
+    spotLight1.shadowMinZ = 1;
+    spotLight1.shadowMaxZ = 50;
+    spotLight1.diffuse = BABYLON.Color3.FromHexString("#430404");
+
+    const spotLight2 = new BABYLON.SpotLight("spot2", new BABYLON.Vector3(3, 6, -3), new BABYLON.Vector3(-1, -1.5, 1), Math.PI / 2, 10, scene);
+    spotLight2.intensity = 220;
+    spotLight2.shadowMinZ = 1;
+    spotLight2.shadowMaxZ = 50;
+    spotLight2.diffuse = BABYLON.Color3.FromHexString("#06062C");
+
+    const spotLight3 = new BABYLON.SpotLight("spot3", new BABYLON.Vector3(3, 6, 3), new BABYLON.Vector3(-0.3, -1.5, 0), Math.PI / 2, 10, scene);
+    spotLight3.intensity = 350;
+    spotLight3.shadowMinZ = 1;
+    spotLight3.shadowMaxZ = 50;
+    spotLight3.diffuse = BABYLON.Color3.FromHexString("#834923");
+
+    // Add camera
+    const camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 3, 5, BABYLON.Vector3.Zero());
+    camera.attachControl(canvas, true);
+
+    // Append glTF models to scene, including ReadyPlayerMe model (rig matches mixamo animations)
+    const livingRoomScene = await BABYLON.SceneLoader.AppendAsync("https://thomlucc.github.io/Assets/RoomDemo/", "LivingRoomModel9.glb", scene);
+    const floor = scene.getMeshByName("floor");
+    const baseUrl = "https://thomlucc.github.io/Assets/AvatarDemo/";
+    
+
+    //Create Animation UI
+    const advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI(
+        "AnimationUI"
+    );
+    var panel = new BABYLON.GUI.StackPanel();
+    panel.isVisible = true;
+    panel.alpha = 0.75;
+    panel.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+    panel.paddingBottomInPixels = 40;
+    advancedTexture.addControl(panel);
+
+
+
+    const buttonStart = BABYLON.GUI.Button.CreateSimpleButton("button1", "Start");
+    buttonStart.width = 0.25;
+    buttonStart.height = "120px";
+    buttonStart.color = "white";
+    buttonStart.background = "green";
+    buttonStart.textBlock.fontSize = "26px";
+    panel.addControl(buttonStart);
+
+
+    const buttonStop = BABYLON.GUI.Button.CreateSimpleButton("button1", "Stop");
+    buttonStop.width = 0.25;
+    buttonStop.height = "120px";
+    buttonStop.color = "white";
+    buttonStop.background = "green";
+    buttonStop.textBlock.fontSize = "26px";
+    panel.addControl(buttonStop);
+
+
+
+    BABYLON.SceneLoader.LoadAssetContainer(baseUrl, "RPTom.glb", scene, assets => {
+        const rpmMesh = assets.meshes[0];
+        assets.addAllToScene();
+
+        //Add Shadows for each light
+        const shadowGenerator1 = new BABYLON.ShadowGenerator(1024, spotLight1);
+        shadowGenerator1.addShadowCaster(rpmMesh, true);
+        shadowGenerator1.usePercentageCloserFiltering = true;
+        shadowGenerator1.bias = 0.0014
+
+        const shadowGenerator2 = new BABYLON.ShadowGenerator(1024, spotLight2);
+        shadowGenerator2.addShadowCaster(rpmMesh, true);
+        shadowGenerator2.usePercentageCloserFiltering = true;
+
+        const shadowGenerator3 = new BABYLON.ShadowGenerator(1024, spotLight3);
+        shadowGenerator3.addShadowCaster(rpmMesh, true);
+        shadowGenerator3.usePercentageCloserFiltering = true;
+
+        floor.receiveShadows = true;
+
+        BABYLON.SceneLoader.OnPluginActivatedObservable.addOnce(loader => {
+            loader.animationStartMode = BABYLON.GLTFLoaderAnimationStartMode.NONE;
+        });
+
+        // Mixamo animation
+        const hiphop = BABYLON.SceneLoader.ImportAnimations(baseUrl, "SillyDance.glb", scene, false, BABYLON.SceneLoaderAnimationGroupLoadingMode.Clean, null,()=>{
+            // Get Animation Group
+            const dancing = scene.getAnimationGroupByName("Armature|mixamo.com|Layer0");
+            buttonStop.onPointerClickObservable.add(() => {
+                //Stop Anim
+                dancing.stop();
+            })
+            buttonStart.onPointerClickObservable.add(() => {
+                //Start Anim
+                dancing.start(true, 1.0, dancing.from, dancing.to, false);
+            })
+        });
+        
+
+
+    });
+
+
+
+    //Render scene in proper mode WebGPU if available
+    return new Promise((resolve) => {
+        scene.executeWhenReady(() => {
+            engine.snapshotRendering = false;
+            if (IsWebGPUMode) {
+                scene.onBeforeRenderObservable.add(() => {
+                    scene.skeletons.forEach((skeleton) => skeleton.prepare());
+                });
+                }
+
+            resolve(scene);
+            
+            //Hide loading screen
+            engine.hideLoadingUI();
+            //Load gui
+            const gui = makeGUI(IsWebGPUMode, scene, sceneInstrumentation);
+        });
+
+    });
+
+}
+
+
+function makeGUI(IsWebGPUMode, scene, sceneInstrumentation) {
+    const oldgui = document.getElementById("datGUI");
+    if (oldgui) {
+        oldgui.remove();
+    }
+
+    const gui = new dat.GUI();
+    gui.domElement.id = "datGUI";
+
+    this._options = {
+        "global_snapshotmode": "disabled",
+        "statistics_frametotal": "0 ms",
+        "statistics_virtualfps": "0 fps",
+    };
+
+    gui.domElement.style.marginTop = "100px";
+
+    // Global
+    if (IsWebGPUMode) {
+        const global = gui.addFolder("Global");
+
+        global.add(this._options, "global_snapshotmode", ["disabled", "standard", "fast"])
+            .name("Snapshot mode")
+            .onChange((value) => {
+                setSnapshotMode(value);
+            });
+
+        global.open();
+    }
+
+    // Statistics
+    const statistics = gui.addFolder("Statistics");
+
+    const frameTotalCtrl = statistics.add(this._options, "statistics_frametotal")
+        .name("Frame total");
+
+    frameTotalCtrl.domElement.children[0].readOnly = true;
+
+    const virtualFpsCtrl = statistics.add(this._options, "statistics_virtualfps")
+        .name("Virtual fps");
+
+    virtualFpsCtrl.domElement.children[0].readOnly = true;
+
+    scene.onAfterRenderObservable.add(() => {
+        frameTotalCtrl.__input.value = sceneInstrumentation.frameTimeCounter.lastSecAverage.toFixed(2) + " ms";
+        virtualFpsCtrl.__input.value = (1000 / sceneInstrumentation.frameTimeCounter.lastSecAverage).toFixed(0) + " fps";
+    });
+
+    statistics.open();
+
+    return this._options;
+}
+                window.initFunction = async function() {
+                    
+                    
+                    
+                    var asyncEngineCreation = async function() {
+                        try {
+                        return createDefaultEngine();
+                        } catch(e) {
+                        console.log("the available createEngine function failed. Creating the default engine instead");
+                        return createDefaultEngine();
+                        }
+                    }
+
+                    window.engine = await asyncEngineCreation();
+        if (!engine) throw 'engine should not be null.';
+        startRenderLoop(engine, canvas);
+        window.scene = delayCreateScene();};
+        initFunction().then(() => {scene.then(returnedScene => { sceneToRender = returnedScene; });
+        
+                    });
+
+                    // Resize
+                    window.addEventListener("resize", function () {
+                        engine.resize();
+                    });
+        </script>
+    </body>
+</html>

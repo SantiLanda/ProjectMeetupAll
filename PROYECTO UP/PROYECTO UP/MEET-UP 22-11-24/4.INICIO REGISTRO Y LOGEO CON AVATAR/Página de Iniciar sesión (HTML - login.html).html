@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Meet-Up</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="Meet-Up Logo">
+    </div>
+    <h1>Welcome Back!</h1>
+    <p>Log in to continue connecting with your community.</p>
+  </header>
+
+  <main>
+    <section class="login-form">
+      <form id="login-form">
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+
+        <label for="gender">Gender:</label>
+        <div class="gender-options">
+          <label>
+            <input type="radio" name="gender" value="male" required> Male
+          </label>
+          <label>
+            <input type="radio" name="gender" value="female"> Female
+          </label>
+        </div>
+
+        <button type="submit" id="login-button">Log In</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Meet-Up. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Script for login functionality -->
+  <script src="login.js"></script>
+</body>
+</html>

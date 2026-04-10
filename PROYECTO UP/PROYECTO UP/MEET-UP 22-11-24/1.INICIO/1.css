@@ -1,0 +1,100 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Body Styling */
+  body {
+    font-family: Arial, sans-serif;
+    background: #1abc9c;
+    color: #fff;
+    line-height: 1.6;
+    text-align: center;
+  }
+  
+  /* Header Styling */
+  header {
+    padding: 20px;
+    background: #16a085;
+  }
+  header .logo img {
+    width: 120px;
+  }
+  header h1 {
+    font-size: 2.5rem;
+    margin: 10px 0;
+  }
+  header p {
+    margin: 10px 0 20px;
+    font-size: 1.2rem;
+  }
+  header .cta-buttons button {
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+  }
+  #join-now {
+    background: #2980b9;
+    color: #fff;
+  }
+  #explore-events {
+    background: #e67e22;
+    color: #fff;
+  }
+  
+  /* Features Section */
+  .features {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+  }
+  .feature-card {
+    background: #2ecc71;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+  }
+  
+  /* Events Section */
+  .popular-events .event-card {
+    background: #27ae60;
+    margin: 10px auto;
+    padding: 15px;
+    border-radius: 10px;
+    width: 80%;
+  }
+  
+  /* Footer */
+  footer {
+    margin-top: 20px;
+    padding: 10px;
+    background: #16a085;
+  }
+  footer .social-icons a {
+    margin: 0 10px;
+    color: #fff;
+    text-decoration: none;
+  }
+  footer .newsletter {
+    margin-top: 10px;
+  }
+  footer input {
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+  }
+  footer button {
+    background: #27ae60;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  

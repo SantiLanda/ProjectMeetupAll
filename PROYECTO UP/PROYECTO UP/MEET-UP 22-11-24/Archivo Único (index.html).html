@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meet-Up</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body Styling */
+    body {
+      font-family: Arial, sans-serif;
+      background: #1abc9c;
+      color: #fff;
+      line-height: 1.6;
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Header Styling */
+    header {
+      padding: 20px;
+      background: #16a085;
+    }
+    header .logo img {
+      width: 120px;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin: 10px 0;
+    }
+    header p {
+      margin: 10px 0 20px;
+      font-size: 1.2rem;
+    }
+    header .cta-buttons button {
+      margin: 5px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    header .cta-buttons button#join-now {
+      background: #2980b9;
+      color: #fff;
+    }
+    header .cta-buttons button#explore-events {
+      background: #e67e22;
+      color: #fff;
+    }
+
+    /* Forms Styling */
+    form {
+      width: 80%;
+      max-width: 400px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #2ecc71;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    form label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+    form input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+    }
+    form button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      color: #fff;
+    }
+    form button#fingerprint-scan {
+      background: #3498db;
+    }
+    form button#submit-registration,
+    form button#login-button {
+      background: #e67e22;
+    }
+
+    /* Gender Options */
+    .gender-options {
+      display: flex;
+      justify-content: space-around;
+      margin: 10px 0;
+    }
+    .gender-options label {
+      margin: 0 10px;
+      font-size: 1rem;
+      color: #fff;
+      cursor: pointer;
+    }
+    .gender-options input[type="radio"] {
+      margin-right: 5px;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 20px;
+      padding: 10px;
+      background: #16a085;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="./images/logo MEET-UP.webp" alt="Meet-Up Logo">
+    </div>
+    <h1>What is Meet-Up?</h1>
+    <p>Connect. Create. Share.</p>
+    <div class="cta-buttons">
+      <button id="show-register">Join Now</button>
+      <button id="show-login">Log In</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Registration Form -->
+    <section id="register-section" style="display: none;">
+      <form id="registration-form">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" placeholder="Enter your full name" required>
+        
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+        
+        <button type="button" id="fingerprint-scan">Scan Fingerprint</button>
+        <div id="biometric-status"></div>
+
+        <button type="submit" id="submit-registration">Register</button>
+      </form>
+    </section>
+
+    <!-- Login Form -->
+    <section id="login-section" style="display: none;">
+      <form id="login-form">
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+
+        <label for="gender">Gender:</label>
+        <div class="gender-options">
+          <label>
+            <input type="radio" name="gender" value="male" required> Male
+          </label>
+          <label>
+            <input type="radio" name="gender" value="female"> Female
+          </label>
+        </div>
+
+        <button type="submit" id="login-button">Log In</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Meet-Up. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    // Switching between forms
+    const showRegister = document.getElementById('show-register');
+    const showLogin = document.getElementById('show-login');
+    const registerSection = document.getElementById('register-section');
+    const loginSection = document.getElementById('login-section');
+
+    showRegister.addEventListener('click', () => {
+      registerSection.style.display = 'block';
+      loginSection.style.display = 'none';
+    });
+
+    showLogin.addEventListener('click', () => {
+      loginSection.style.display = 'block';
+      registerSection.style.display = 'none';
+    });
+
+    // Register Form
+    document.getElementById('fingerprint-scan').addEventListener('click', () => {
+      const status = document.getElementById('biometric-status');
+      status.textContent = 'Scanning...';
+
+      setTimeout(() => {
+        const success = Math.random() > 0.2;
+        if (success) {
+          status.textContent = 'Fingerprint scan successful!';
+          status.style.color = '#2ecc71';
+        } else {
+          status.textContent = 'Fingerprint scan failed. Try again.';
+          status.style.color = '#e74c3c';
+        }
+      }, 2000);
+    });
+
+    document.getElementById('registration-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const status = document.getElementById('biometric-status').textContent;
+      if (status.includes('successful')) {
+        alert('Registration successful! Welcome to Meet-Up!');
+      } else {
+        alert('Please complete biometric authentication.');
+      }
+    });
+
+    // Login Form
+    document.getElementById('login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const gender = document.querySelector('input[name="gender"]:checked')?.value;
+
+      if (email && password && gender) {
+        alert(`Welcome back, ${email}! Gender: ${gender}`);
+      } else {
+        alert('Please fill in all fields.');
+      }
+    });
+  </script>
+</body>
+</html>
